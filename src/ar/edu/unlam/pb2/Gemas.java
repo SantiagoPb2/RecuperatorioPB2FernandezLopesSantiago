@@ -1,6 +1,6 @@
 package ar.edu.unlam.pb2;
 
-public class Gemas {
+public class Gemas implements Hechizable{
 	
 	private String nombreGema;
 
@@ -14,6 +14,17 @@ public class Gemas {
 
 	public void setNombreGema(String nombreGema) {
 		this.nombreGema = nombreGema;
+	}
+
+	@Override
+	public Integer aumentarPoder(Integer poder) {
+		Integer poderAumentado;
+		if(nombreGema.equals("Tiempo") || nombreGema.equals("Mente") || nombreGema.equals("Poder")) {
+			poderAumentado = poder * 3;
+		}else {
+			poderAumentado = poder * 2;
+		}
+		return poderAumentado;
 	}
 
 }

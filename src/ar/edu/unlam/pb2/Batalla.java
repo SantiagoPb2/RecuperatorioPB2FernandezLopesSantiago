@@ -6,5 +6,12 @@ public class Batalla {
 	
 	private TreeSet<Heroes>heroes;
 	private TreeSet<Villanos>villanos;
+	private String nombre;
+	
+	public Batalla(String nombreBatalla) {
+		this.nombre = nombreBatalla;
+		this.heroes = new TreeSet<Heroes>();
+		this.villanos = new TreeSet<Villanos>();
+	}
 
 }

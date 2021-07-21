@@ -13,5 +13,9 @@ public class Batalla {
 		this.heroes = new TreeSet<Heroes>();
 		this.villanos = new TreeSet<Villanos>();
 	}
+	
+	public void enfrentarPersonajes(Villanos villano,Heroes heroe) {
+		
+	}
 
 }

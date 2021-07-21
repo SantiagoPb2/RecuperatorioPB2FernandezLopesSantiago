@@ -4,16 +4,38 @@ import java.util.TreeSet;
 
 public class Batalla {
 	
-	private TreeSet<Heroes>heroes;
-	private TreeSet<Villanos>villanos;
+	private TreeSet<Personajes>heroes;
+	private TreeSet<Personajes>villanos;
 	private String nombre;
-	private Integer listaGanadorHeroes;
-	private Integer listaGanadorVillanos;
+	private Integer listaGanadorHeroes=0;
+	private Integer listaGanadorVillanos=0;
+	private Integer contadorGemasVillanos = 0;
+	private Integer contadorGemasHeroes = 0;
 	
 	public Batalla(String nombreBatalla) {
 		this.nombre = nombreBatalla;
-		this.heroes = new TreeSet<Heroes>();
-		this.villanos = new TreeSet<Villanos>();
+		this.heroes = new TreeSet<Personajes>();
+		this.villanos = new TreeSet<Personajes>();
+	}
+	
+	public void incorporarGemaAntesDeBatalla(Gemas gema,String nombre) {
+		Personajes buscar1 = buscarVillano(nombre);
+		Personajes buscar2 = buscarHeroe(nombre);	
+		if(buscar1 != null && contadorGemasVillanos < 3) {
+			buscar1.agregarGema(gema);
+			contadorGemasVillanos++;
+		}else if(buscar2 != null && contadorGemasHeroes < 3) {
+			buscar2.agregarGema(gema);
+			contadorGemasHeroes++;
+		}
+	}
+	
+	public void agregarHeroes(Personajes heroes) {
+		this.heroes.add(heroes);
+	}
+	
+	public void agregarVillanos(Personajes villanos) {
+		this.villanos.add(villanos);
 	}
 	
 	public String getNombre() {
@@ -25,8 +47,8 @@ public class Batalla {
 	}
 
 	public void enfrentarPersonajes(String nombrevillano,String nombreHeroe) throws PersonajeNoEncontradoException{
-		Villanos p1 = buscarVillano(nombrevillano);
-		Heroes p2 = buscarHeroe(nombreHeroe);
+		Personajes p1 = buscarVillano(nombrevillano);
+		Personajes p2 = buscarHeroe(nombreHeroe);
 		
 		if(p1 == null || p2 == null) {
 			throw new PersonajeNoEncontradoException();
@@ -41,36 +63,37 @@ public class Batalla {
 		}
 	}
 	
-	public String resultadoFinal() {
+	public String resultadoFinal() throws WorldDestroyedException {
 		String msj;
 		if(heroes.size() > villanos.size()) {
 			msj = "Los heroes han ganado";
 		}else{
 			msj = "Los villanos han ganado";
+			throw new WorldDestroyedException();
 		}
 		return msj;
 	}
 	
-	private void muerteHeroe(Heroes heroe) {
+	private void muerteHeroe(Personajes heroe) {
 		this.heroes.remove(heroe);
 	}
 	
-	private void muerteVillano(Villanos villano) {
+	private void muerteVillano(Personajes villano) {
 		this.villanos.remove(villano);
 	}
 	
-	private Heroes buscarHeroe(String nombreHeroe) {
-		for(Heroes buscar: heroes) {
-			if(buscar.getNombre().equals(nombreHeroe)) {
+	private Personajes buscarHeroe(String nombreHeroe) {
+		for(Personajes buscar: heroes) {
+			if(buscar.getNombre().equalsIgnoreCase(nombreHeroe)) {
 				return buscar;
 			}
 		}
 		return null;
 	}
 
-	private Villanos buscarVillano(String nombreVillano) {
-		for(Villanos buscar: villanos) {
-			if(buscar.getNombre().equals(nombreVillano)) {
+	private Personajes buscarVillano(String nombreVillano) {
+		for(Personajes buscar: villanos) {
+			if(buscar.getNombre().equalsIgnoreCase(nombreVillano)) {
 				return buscar;
 			}
 		}

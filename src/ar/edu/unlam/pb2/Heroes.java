@@ -1,6 +1,6 @@
 package ar.edu.unlam.pb2;
 
-public class Heroes extends Personajes{
+public class Heroes extends Personajes implements Comparable<Heroes>{
 	
 	private String tipoPersonaje;
 
@@ -15,6 +15,11 @@ public class Heroes extends Personajes{
 
 	public void setTipoPersonaje(String tipoPersonaje) {
 		this.tipoPersonaje = tipoPersonaje;
+	}
+
+	@Override
+	public int compareTo(Heroes o) {
+		return getPoder().compareTo(o.getPoder());
 	}
 	
 
